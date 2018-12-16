@@ -1,0 +1,648 @@
+		    ***** Single Page Applications *****
+
+	- loading one template another template without refreshing
+	  the whole web page called as Single Page Application.
+
+	- loading one template to another template single page application
+	  called as "Routing".
+
+	- "Routes" is the predefined Array.
+
+	- "Routes" array used to implement the Routing in Single Page
+	  Applications.
+
+	- "RouterModule" is the Predefined Module.
+
+	- "RouterModule" used to load the "Routings" into Memory.
+
+	- "Router" is the Predefined Class.
+
+	- "Router" class used to navigate from one template to
+	   another template in single page applications.
+
+	- "Routes", "RouterModule" and "Router" class available in
+	  "@angular/router package
+
+
+
+	
+- in the above application we have following components
+
+	1) IndexComponent
+
+	2) PageoneComponent
+
+	3) PagetwoComponent
+
+	4) PagethreeComponent
+
+- where "IndexComponent" is the source Component in Single Page Application.
+
+- where as "PageoneComponent","PagetwoComponent" & "PagethreeComponents"
+  are Target Components in Single Page Application.
+
+
+Steps to implement the above application
+----------------------------------------
+
+Step 1.
+	generate the components by using following command.
+
+
+> ng g c components/index  --spec=false -is
+
+> ng g c components/pageone  --spec=false  -is
+
+> ng g c components/pagetwo  --spec=false -is
+
+> ng g c components/pagethree  --spec=false -is
+
+	- "g" stands for generate
+
+	- "c" stands for Component
+
+
+	- "--spec=false" means avoiding the creation of 
+	   unit testing file
+
+	- "is" stands for inline styles
+
+	- "-is" meaning is avoiding the external style sheets
+
+
+
+Step 2.
+	implement the business logic in target components
+
+
+Step 3.
+	implement the presentation logic in source component template
+
+
+
+Step 4.
+	implement the Routing in Single Page Applications by using
+	"Routes" Array
+
+
+******************************
+spaDemo1
+      src
+	app
+	  routings
+	     app.routes.ts
+******************************
+
+
+Step 5.
+	load "appRoutes" in memory by using "RouterModule"
+
+
+app.module.ts
+-------------
+	-----
+	-----
+	-----
+import { RouterModule } from "@angular/router";
+import { appRoutes } from "./routings/app.routes";
+	-----
+	-----
+	-----
+
+imports: [
+    BrowserModule,RouterModule.forRoot(appRoutes)
+]
+	----
+	----
+	----
+bootstrap: [IndexComponent]
+
+	- forRoot() is the Predefined function in RouterModule
+	
+	- forRoot() function used to load the routes into memory.
+
+index.html
+----------
+	----
+	----
+<body>
+	<app-index></app-index>
+</body>
+	----
+	----
+	
+
+			***** Nested Routing *****
+
+	- if we have routing more than one level called as
+	  Nested Routing in Single Page Application.
+
+
+Steps to Implement the Nested Routing in Single Page Application
+----------------------------------------------------------------
+
+Step 1.
+	Generate the Components.
+
+> ng g c components/childone --spec=false -is
+
+> ng g c components/childtwo --spec=false -is
+
+> ng g c components/childthree --spec=false -is
+
+
+Step 2.
+	implement the business logic in target components
+
+
+Step 3.
+	Define HyperLinks
+
+
+Step 4.
+	implement the Routing
+
+
+			***** Route Guards *****
+
+
+1) CanActivate
+
+	- CanActivate is the Route Guard.
+
+	- CanActivate is the Predefined interface.
+
+	- canActivate() is the boolean unimplemented method in
+	  CanActivate Interface.
+
+	- CanActivate Route Guard used to give the permission to 
+	  enter into Main Routes in Single Page Applications.
+
+	- CanActivate interface available in @angular/router package.
+
+
+
+2) CanDeactivate
+	
+	- CanDeactivate is the Route Guard.
+
+	- CanDeactivate is the predefined interface.
+
+	- canDeactivate() is the unimplemented boolean method in
+	  CanDeactivate Interface
+	
+	- CanDeactivate Route Guard used to give the permission
+	  to leave main Routings in Single Page Applications.
+
+	- CanDeactivate interface available in @angular/router package.
+
+
+3) CanActivateChild
+
+	- CanActivateChild is the Route Guard.
+
+	- CanActivateChild is the Predefined Interface.
+
+	- canActivateChild() is the unimplemented boolean method
+	  in CanActivateChild Interface.
+
+	- "CanActivateChild" Route Guard used to give the permission
+	  to enter into child routes.
+
+	- CanActivateChild interface available in @angular/router package.
+
+[Note : we will implement the Route Guards by using Custom Services]
+
+
+Steps to implement the Route Guards in Single Page Applications
+---------------------------------------------------------------
+
+Step 1.
+	implement the RouteGuards by using Custom Service
+
+
+***********************************
+spaDemo1
+       src	
+	 app
+	   guards
+	      auth.guards.ts
+***********************************
+
+
+Step 2.
+	Register "authGuards" in module.
+
+
+app.module.ts
+-------------
+	----
+	----
+	----
+import { authGuards } from "./guards/auth.guards";
+	----
+	----
+	----
+	----
+providers: [authGuards]
+	----
+	----
+	----
+
+
+Step 3.
+	apply the route guards to components.
+
+	PagetwoComponent	==> CanActivate
+
+	PagetwoComponent       ==> CanDeactivate
+
+	ChildoneComponent      ==> CanActivateChild
+
+
+Ex_1.
+	in the above diagram we are navigating to custom module.
+
+	where "myModule" is the Custom Module.
+
+	"myModule" making the Rest API Call.
+
+	assume myModule is the heavy Component (Module)
+
+	assume myModule receiving the images from server.
+
+	if we load myModule at booting time automatically application
+	booting time will be increased and application performance
+	will be degraded.
+
+	so, as a angular developer we must load myModule based on demand.
+
+	loading myModule based on demand called as lazy loading.
+
+
+Steps to implement the lazy loading in Single Page Application
+--------------------------------------------------------------
+
+Step 1.
+	implement the Components.
+
+
+******************************************
+spaDemo2
+      src
+	app
+          pageone.component.ts
+	  pageone.component.html
+
+	  index.component.ts
+	  index.component.html
+******************************************
+
+
+Step 2.
+	implement myModule
+
+
+*********************************************
+spaDemo2
+      src
+	app
+	  countries.service.ts
+
+	  countries.component.ts
+	  countries.component.html
+
+	  my.module.ts
+*********************************************
+
+	URL : https://restcountries.eu/rest/v2/all
+
+
+Step 3.
+	implement the CanLoad Permission
+
+
+***************************
+spaDemo2
+      src
+	app
+	  auth.guard.ts
+***************************
+
+
+Step 4.
+	implement the routing
+
+
+***********************
+spaDemo2
+      src
+	app
+	  app.routes.ts
+***********************
+
+Step 5.
+	bootstrap the indexComponent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
